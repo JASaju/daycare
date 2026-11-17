@@ -86,7 +86,7 @@
                 </h4>
 
                 <p class="text-muted mb-3">
-                    Employee Login Portal
+                     Login Portal
                 </p>
             </div>
 
