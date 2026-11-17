@@ -81,10 +81,6 @@
                      class="logo"> -->
 
 
-                <h4 class="login-title mb-1">
-                    Day Care Centre
-                </h4>
-
                 <p class="text-muted mb-3">
                      Login Portal
                 </p>
