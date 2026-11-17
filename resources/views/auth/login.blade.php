@@ -82,7 +82,7 @@
 
 
                 <p class="text-muted mb-3">
-                     Login Portal
+                     Login Portal, Day Care Centre
                 </p>
             </div>
 
