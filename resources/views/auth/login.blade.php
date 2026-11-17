@@ -131,7 +131,7 @@
             <hr>
 
             <p class="text-center text-muted small mb-0">
-                Day Care Centre Management System
+                Day Care Centre
             </p>
 
         </div>
