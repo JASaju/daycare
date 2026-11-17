@@ -1,0 +1,32 @@
+# Uploads folder hardening: this folder must only ever serve static images.
+
+# No directory listing
+Options -Indexes -ExecCGI
+
+# Never run scripts from here, whatever the extension
+<FilesMatch "(?i)\.(php[0-9]?|phtml|phar|pl|py|cgi|sh|asp|aspx|jsp)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+
+# Only these image types are served
+<FilesMatch "(?i)^(?!.*\.(jpe?g|png|webp)$).*$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>
+
+# Stop browsers from MIME-sniffing files into something executable
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set Content-Security-Policy "default-src 'none'; img-src 'self'; sandbox"
+</IfModule>
