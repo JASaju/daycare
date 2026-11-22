@@ -10,7 +10,7 @@
             @if(in_array(auth()->user()->role, ["admin", "staff"]))
                 <a href="{{ route('attendance.pdf', request()->query()) }}" target="_blank"
                    class="btn btn-danger" title="Generate attendance PDF">
-                    <i class="bi bi-file-earmark-pdf"></i> Attendance PDF
+                    <i class="bi bi-file-earmark-pdf"></i>PDF
                 </a>
             @endif
         </div>
