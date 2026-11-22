@@ -11,9 +11,15 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HealthRecordController;
 use App\Http\Controllers\InstrumentController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\LoginActivityController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SecurityAlertController;
+use App\Http\Controllers\SecurityDashboardController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\SuspiciousActivityController;
+use App\Http\Controllers\SystemAuditLogController;
+use App\Http\Controllers\UserActivityLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +33,8 @@ Route::pattern('invoice', '[0-9]+');
 Route::pattern('payment', '[0-9]+');
 Route::pattern('employee', '[0-9]+');
 Route::pattern('staffMember', '[0-9]+');
+Route::pattern('suspicious_activity', '[0-9]+');
+Route::pattern('security_alert', '[0-9]+');
 
 /*
 |--------------------------------------------------------------------------
@@ -187,6 +195,34 @@ Route::middleware('auth')->group(function () {
         Route::middleware('throttle:20,1')->prefix('reports')->name('reports.')->group(function () {
             Route::get('/employees', [ReportController::class, 'employees'])->name('employees');
             Route::get('/staff', [ReportController::class, 'staff'])->name('staff');
+        });
+
+        /*
+        |------------------------------------------------------------------
+        | Security monitoring (admin only, JSON endpoints)
+        | apiResource binds {suspicious_activity} / {security_alert}, which
+        | match the controller method parameter names.
+        |------------------------------------------------------------------
+        */
+        Route::prefix('security')->name('security.')->group(function () {
+
+            // Read-only monitoring endpoints
+            Route::middleware('throttle:60,1')->group(function () {
+                Route::get('dashboard', [SecurityDashboardController::class, 'index'])->name('dashboard');
+                Route::get('login-activities', [LoginActivityController::class, 'index'])->name('login-activities');
+                Route::get('failed-logins', [LoginActivityController::class, 'failed'])->name('failed-logins');
+                Route::get('user-activity-logs', [UserActivityLogController::class, 'index'])->name('user-activity-logs');
+                Route::get('audit-logs', [SystemAuditLogController::class, 'index'])->name('audit-logs');
+
+                Route::apiResource('suspicious-activities', SuspiciousActivityController::class)->only(['index']);
+                Route::apiResource('security-alerts', SecurityAlertController::class)->only(['index']);
+            });
+
+            // State-changing actions (resolve / acknowledge): tighter throttle
+            Route::middleware('throttle:30,1')->group(function () {
+                Route::apiResource('suspicious-activities', SuspiciousActivityController::class)->only(['update']);
+                Route::apiResource('security-alerts', SecurityAlertController::class)->only(['update']);
+            });
         });
     });
 

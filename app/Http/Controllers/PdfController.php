@@ -33,7 +33,7 @@ class PdfController extends Controller
             'Name'   => $request->input('name'),
             'Gender' => $request->input('gender'),
             'Status' => $filterStatus ? str_replace('_', ' ', $filterStatus) : null,
-            'Parent' => $selectedEmployee?->name,
+            'Parent' => $selectedEmployee->name,
         ];
 
         return app(ReportController::class)->render(

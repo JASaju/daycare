@@ -55,7 +55,7 @@ class Child extends Model
 
     public function getAgeAttribute()
     {
-        return $this->date_of_birth?->age;
+        return $this->date_of_birth->age;
     }
 
     /**

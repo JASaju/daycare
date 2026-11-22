@@ -88,7 +88,6 @@
     <tr>
         <td class="c">
             <barcode code="{{ $qrUrl }}" type="QR" class="barcode" size="0.9" error="M" disableborder="1" />
-            <br><b style="font-size:8pt;">This Document</b>
         </td>
     </tr>
 </table>
