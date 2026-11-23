@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Child;
 use App\Models\Employee;
 use App\Models\Instrument;
@@ -15,7 +13,6 @@ use Illuminate\Support\Facades\Log;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
 use Mpdf\Mpdf;
-
 class ReportController extends Controller
 {
     public function __construct()
