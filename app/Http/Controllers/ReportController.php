@@ -330,7 +330,7 @@ class ReportController extends Controller
 
         $data['filters'] = $filters;
 
-        $data['code']  = strtoupper(substr($filename, 0, 3)) . '-' . now('Asia/Dhaka')->format('ymd-His');
+        $data['code']  = strtoupper(substr($filename, 0, 3)). '-' . now('Asia/Dhaka')->format('ymd-Hisv'). '-' . random_int(100, 999);
         $data['qrUrl'] = request()->fullUrl();
 
         $config   = (new ConfigVariables())->getDefaults();
